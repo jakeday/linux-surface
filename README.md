@@ -58,9 +58,9 @@ For the ipts_firmware files, please select the version for your device.
 5. (all other distros) Fix issue with Suspend to Disk:
   * $ sudo ln -s /usr/lib/systemd/system/hibernate.target /etc/systemd/system/suspend.target && sudo ln -s /usr/lib/systemd/system/systemd-hibernate.service /etc/systemd/system/systemd-suspend.service
 6. Install the latest marvell firmware:
-  * git clone git://git.marvell.com/mwifiex-firmware.git  
+  * sudo git clone git://git.marvell.com/mwifiex-firmware.git /opt/mwifiex-firmware  
   * sudo mkdir -p /lib/firmware/mrvl/  
-  * sudo cp mwifiex-firmware/mrvl/* /lib/firmware/mrvl/
+  * sudo ln -sf /opt/mwifiex-firmware/mrvl/* /lib/firmware/mrvl/
 7. Install the custom kernel and headers:
   * $ sudo dpkg -i linux-headers-[VERSION].deb linux-image-[VERSION].deb
 8. Reboot on installed kernel.
@@ -68,6 +68,12 @@ For the ipts_firmware files, please select the version for your device.
 ### NOTES
 
 If you are getting stuck at boot when loading the ramdisk, you need to install the Processor Microcode Firmware for Intel CPUs (usually found under Additional Drivers in Software and Updates).
+
+Updates to the package `linux-firmware` will overwrite the user-copied file, likely breaking the wifi functionality.  
+If/when this is the case, just overwrite the files and reboot:
+```sh
+  $ sudo ln -sf /opt/mwifiex-firmware/mrvl/* /lib/firmware/mrvl/
+```
 
 ### Donations Appreciated!
 
