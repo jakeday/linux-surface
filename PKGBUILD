@@ -1,3 +1,4 @@
+# Maintainer: Pharra <qq940530348@gmail.com>
 # Maintainer: Shadoukun <shadoukun@gmail.com>
 # Contributor: SuperBo <supernbo@gmail.com>
 # Maintainer: Tobias Powalowski <tpowa@archlinux.org>
@@ -89,7 +90,7 @@ prepare() {
 build() {
   cd ${_srcname}
 
-  make ${MAKEFLAGS} LOCALVERSION= bzImage modules -j4
+  make ${MAKEFLAGS} LOCALVERSION= bzImage modules
 }
 
 _package() {
