@@ -6,8 +6,8 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-mysurface4      # Build kernel with a different name
-_srcname=linux-4.14.8
-pkgver=4.14.8
+_srcname=kernel
+pkgver=4.14.10
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
