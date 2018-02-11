@@ -1,13 +1,12 @@
-# Maintainer: Pharra <qq940530348@gmail.com>
 # Maintainer: Shadoukun <shadoukun@gmail.com>
 # Contributor: SuperBo <supernbo@gmail.com>
 # Maintainer: Tobias Powalowski <tpowa@archlinux.org>
 # Maintainer: Thomas Baechler <thomas@archlinux.org>
 
 #pkgbase=linux               # Build stock -ARCH kernel
-pkgbase=linux-mysurface4      # Build kernel with a different name
-_srcname=kernel
-pkgver=4.14.10
+pkgbase=linux-surface4      # Build kernel with a different name
+_srcname=linux-4.14.16
+pkgver=4.14.16
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -15,26 +14,39 @@ license=('GPL2')
 makedepends=('xmlto' 'kmod' 'inetutils' 'bc' 'libelf')
 options=('!strip')
 source=(
-  "${_srcname}.tar.xz"
-  #"${_srcname}.tar.sign"
+  'ipts.patch'
+  'sdcard_reader.patch'
+  'wifi.patch'
+  'keyboards_and_covers.patch'
+  'surfacedock.patch'
+  'cameras.patch'
+  '99-ipts.rules'
+  "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+  "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
   #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
   #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
   'config'         # the main kernel config file
   '60-linux.hook'  # pacman hook for depmod
   '90-linux.hook'  # pacman hook for initramfs regeneration
   'linux.preset'   # standard config files for mkinitcpio ramdisk
-  '99-ipts.rules'
 )
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
-sha256sums=('a25c8e75fc63a0a3bee5b661caf43eea333eac572c104d834d0a5f4ef03aeca8'
-            'a34393607d85350d4c52108f2e6b8d217fba11b9221502616487f292f5fcd04d'
+sha256sums=('fce3017d530636dfc5f741c5e6599188d5516bea2cada83b72e9d14bd1293911'
+            '14487e068494ae000623c179dc332ba4c21ec0d9364be5e72fc14a3e838ed8ab'
+            'c6e13009cc6a22ec81d6d45013050478f2a729467dc2eed2a59e350ce29fcce5'
+            '06fdf2422621e783f9ce5bfcba57f3ca75db6fadb6231ac1182b7d3cf32cfa86'
+            'e6f77fab303ee8ac540a2b0f8a030c346ee4a5b620dec4a6ac61757ce326f750'
+            'ee7e0b7a67cd853d147bb3f5d2d596b4309e3d87059b6797fe85b4ba3eaa63d2'
+            '82d0fa48947aff93cbbc9a0f0f3020bf95e860d604549b20f7ef8e1634798bd8'
+            '070bdb482245977b1ff7f9008eb6455ec27501fb7438426bb54f3b592513ac24'
+            'SKIP'
+            'd36ada7a6379abe4b73619714f75e0b2b87eae1b082fa532390f7217565377c3'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             '75f99f5239e03238f88d1a834c50043ec32b1dc568f2cc291b07d04718483919'
-            'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
-            '82d0fa48947aff93cbbc9a0f0f3020bf95e860d604549b20f7ef8e1634798bd8')
+            'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65')
 
 _kernelname=${pkgbase#linux}
 
@@ -53,11 +65,12 @@ prepare() {
  # patch -Np1 -i ../0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 
     # surface Patches
-  #patch -Np1 -i "${srcdir}/0001-ipts.patch"
-  #patch -Np1 -i "${srcdir}/0002-hid.patch"
-  #patch -Np1 -i "${srcdir}/0003-wifi.patch"
-  #patch -Np1 -i "${srcdir}/0004-usb.patch"
-  #patch -Np1 -i "${srcdir}/0005-camera.patch"
+  patch -Np1 -i "${srcdir}/ipts.patch"
+  patch -Np1 -i "${srcdir}/sdcard_reader.patch"
+  patch -Np1 -i "${srcdir}/wifi.patch"
+  patch -Np1 -i "${srcdir}/keyboards_and_covers.patch"
+  patch -Np1 -i "${srcdir}/surfacedock.patch"
+  patch -Np1 -i "${srcdir}/cameras.patch"
 
   cp -Tf ../config .config
 
