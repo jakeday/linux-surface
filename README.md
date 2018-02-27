@@ -37,7 +37,7 @@ Linux running on the Surface Book, Surface Book 2, Surface Pro 3, Surface Pro 4,
 
 Downloads for ubuntu based distros (other distros will need to compile from source in the kernel folder):
 
-https://goo.gl/QSZCwq
+https://github.com/jakeday/linux-surface/releases
 
 You will need to download both the image and headers deb files for the version you want to install.
 
@@ -70,7 +70,7 @@ For the i915_firmware files, please select the version for your device.
   * $ sudo ln -s /lib/systemd/system/hibernate.target /etc/systemd/system/suspend.target && sudo ln -s /lib/systemd/system/systemd-hibernate.service /etc/systemd/system/systemd-suspend.service
 6. (all other distros) Fix issue with Suspend to Disk:
   * $ sudo ln -s /usr/lib/systemd/system/hibernate.target /etc/systemd/system/suspend.target && sudo ln -s /usr/lib/systemd/system/systemd-hibernate.service /etc/systemd/system/systemd-suspend.service
-7. Install the latest marvell firmware:
+7. Install the latest marvell firmware (if their repo is down, use my copy at https://github.com/jakeday/mwifiex-firmware):
   * git clone git://git.marvell.com/mwifiex-firmware.git  
   * sudo mkdir -p /lib/firmware/mrvl/  
   * sudo cp mwifiex-firmware/mrvl/* /lib/firmware/mrvl/
