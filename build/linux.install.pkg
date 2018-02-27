@@ -1,7 +1,7 @@
 post_install () {
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
-  depmod 4.14.10-1-mysurface4
+  depmod 4.14.20-1-surface4
 
   firmware_instruct
 }
@@ -15,8 +15,8 @@ post_upgrade() {
 }
 
 post_remove() {
-  rm -f boot/initramfs-linux-mysurface4.img
-  rm -f boot/initramfs-linux-mysurface4-fallback.img
+  rm -f boot/initramfs-linux-surface4.img
+  rm -f boot/initramfs-linux-surface4-fallback.img
 }
 
 
