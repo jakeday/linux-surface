@@ -5,8 +5,8 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface4      # Build kernel with a different name
-_srcname=linux-4.15.6
-pkgver=4.15.6
+_srcname=linux-4.15.4
+pkgver=4.15.4
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -41,7 +41,7 @@ sha256sums=('4ae8db7dc5d5e7a689d11d432218fe30d315df8aa758bfadb51df151c4270100'
             'bddae8572686ffe1d3b2f09786a710fc45287952d0e14a17602f128219a0f2fc'
             '55d40252020d888b5154b9fe05a95084f045e8393b113e96253b7a198d57bb8b'
             '82d0fa48947aff93cbbc9a0f0f3020bf95e860d604549b20f7ef8e1634798bd8'
-            'c8ed27766c20c860de1d0c1b8de64e2a2c235d63e548ef81e4ec5f7cdc698f90'
+            'a23d7e1a9c1f72528531d9933e59e4cc4556752a2ea029fdc66a1b0fd24c8a3a'
             'SKIP'
             'f03540a6607a9d7e5f6d372419911968070d6aa31ff586929a2058e8566143a0'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
