@@ -67,7 +67,7 @@ prepare() {
     # surface Patches
   patch -Np1 -i "${srcdir}/ipts.patch"
   patch -Np1 -i "${srcdir}/sdcard_reader.patch"
-  #patch -Np1 -i "${srcdir}/wifi.patch"
+  patch -Np1 -i "${srcdir}/wifi.patch"
   patch -Np1 -i "${srcdir}/keyboards_and_covers.patch"
   patch -Np1 -i "${srcdir}/surfacedock.patch"
   patch -Np1 -i "${srcdir}/cameras.patch"
