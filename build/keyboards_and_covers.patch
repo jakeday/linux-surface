@@ -1,11 +1,11 @@
-From d13e067cecbdb0bebe7bf5f1afcb9a563891e973 Mon Sep 17 00:00:00 2001
+From 0c1ec9426772daa2d4cedc2eae807419eba9abfb Mon Sep 17 00:00:00 2001
 From: Jake Day <jake@ninebysix.com>
-Date: Thu, 1 Feb 2018 19:24:33 -0500
+Date: Fri, 2 Feb 2018 11:23:08 -0500
 Subject: support for surface keyboards and covers
 
 
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 330ca98..fd75182 100644
+index 0c3f608..b0e22c0 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
 @@ -723,7 +723,8 @@ static void hid_scan_collection(struct hid_parser *parser, unsigned type)
@@ -18,7 +18,7 @@ index 330ca98..fd75182 100644
  	    hid->group == HID_GROUP_MULTITOUCH)
  		hid->group = HID_GROUP_GENERIC;
  
-@@ -2179,6 +2180,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
+@@ -2183,6 +2184,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_DIGITAL_MEDIA_7K) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_DIGITAL_MEDIA_600) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_DIGITAL_MEDIA_3KV1) },
@@ -27,10 +27,10 @@ index 330ca98..fd75182 100644
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_PRESENTER_8K_BT) },
  #endif
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index be2e005..ebb9688 100644
+index 5da3d62..1295dcb 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
-@@ -757,11 +757,21 @@
+@@ -767,11 +767,21 @@
  #define USB_DEVICE_ID_MS_DIGITAL_MEDIA_3KV1 0x0732
  #define USB_DEVICE_ID_MS_DIGITAL_MEDIA_600  0x0750
  #define USB_DEVICE_ID_MS_COMFORT_MOUSE_4500	0x076c
@@ -71,10 +71,10 @@ index 96e7d32..9127164 100644
  		.driver_data = MS_HIDINPUT },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_COMFORT_KEYBOARD),
 diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 97c7c99..4a837b6 100644
+index 65ea23b..dd416e9 100644
 --- a/drivers/hid/hid-multitouch.c
 +++ b/drivers/hid/hid-multitouch.c
-@@ -1611,6 +1611,52 @@ static const struct hid_device_id mt_devices[] = {
+@@ -1638,6 +1638,52 @@ static const struct hid_device_id mt_devices[] = {
  		HID_USB_DEVICE(USB_VENDOR_ID_LG,
  			USB_DEVICE_ID_LG_MELFAS_MT) },
  
@@ -128,7 +128,7 @@ index 97c7c99..4a837b6 100644
  	{ .driver_data = MT_CLS_CONFIDENCE_MINUS_ONE,
  		MT_USB_DEVICE(USB_VENDOR_ID_ASUS,
 diff --git a/drivers/hid/usbhid/hid-quirks.c b/drivers/hid/usbhid/hid-quirks.c
-index f489a5c..ff88ddc 100644
+index 331f7f3..6ff429f 100644
 --- a/drivers/hid/usbhid/hid-quirks.c
 +++ b/drivers/hid/usbhid/hid-quirks.c
 @@ -108,8 +108,18 @@ static const struct hid_blacklist {

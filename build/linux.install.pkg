@@ -1,7 +1,7 @@
 post_install () {
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
-  depmod 4.14.20-1-surface4
+  depmod 4.15.6-1-surface4
 
   firmware_instruct
 }

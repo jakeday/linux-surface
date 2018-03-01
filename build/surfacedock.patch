@@ -1,6 +1,6 @@
-From 952348ceeaf9c900407762d97b2e024272f01191 Mon Sep 17 00:00:00 2001
+From 3600aaa37a16777a07aa34672f12e30a1ae4d95b Mon Sep 17 00:00:00 2001
 From: Jake Day <jake@ninebysix.com>
-Date: Thu, 1 Feb 2018 19:25:44 -0500
+Date: Fri, 2 Feb 2018 11:21:06 -0500
 Subject: support for surface dock
 
 
@@ -23,10 +23,10 @@ index 05dca3e..59c2fcc 100644
  {
  	USB_DEVICE_AND_INTERFACE_INFO(TPLINK_VENDOR_ID, 0x0601, USB_CLASS_COMM,
 diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index d51d9ab..b94ebe9 100644
+index 0657203..0a52ea0 100644
 --- a/drivers/net/usb/r8152.c
 +++ b/drivers/net/usb/r8152.c
-@@ -5310,7 +5310,6 @@ static const struct usb_device_id rtl8152_table[] = {
+@@ -5323,7 +5323,6 @@ static const struct usb_device_id rtl8152_table[] = {
  	{REALTEK_USB_DEVICE(VENDOR_ID_REALTEK, 0x8152)},
  	{REALTEK_USB_DEVICE(VENDOR_ID_REALTEK, 0x8153)},
  	{REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x07ab)},
