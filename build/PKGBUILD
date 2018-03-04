@@ -5,8 +5,8 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface4      # Build kernel with a different name
-_srcname=linux-4.15.4
-pkgver=4.15.4
+_srcname=linux-4.15.7
+pkgver=4.15.7
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -19,6 +19,7 @@ source=(
   'wifi.patch'
   'keyboards_and_covers.patch'
   'surfacedock.patch'
+  'surfaceacpi.patch'
   'cameras.patch'
   '99-ipts.rules'
   "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
@@ -70,6 +71,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/wifi.patch"
   patch -Np1 -i "${srcdir}/keyboards_and_covers.patch"
   patch -Np1 -i "${srcdir}/surfacedock.patch"
+  patch -Np1 -i "${srcdir}/surfaceacpi.patch"
   patch -Np1 -i "${srcdir}/cameras.patch"
 
   cp -Tf ../config .config
