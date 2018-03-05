@@ -2,6 +2,16 @@
 
 Linux running on the Surface Book, Surface Book 2, Surface Pro 3, Surface Pro 4, Surface Pro 2017 and Surface Laptop. Follow the instructions below to install the latest kernel and config files.
 
+### archlinux build system
+
+Forked from jakeday/linux-surface, I have tested it in my surfacepro4. 
+* $ git clone https://github.com/pharra/linux-surface.git
+* $ cd linux-surface/build
+* $ makepkg -si
+
+### Download Pre-built Kernel and Headers for arch
+Downloads for arch based distros:
+
 
 ### What's Working
 
