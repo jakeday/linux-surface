@@ -11,7 +11,7 @@ Forked from jakeday/linux-surface, I have tested it in my surfacepro4.
 
 ### Download Pre-built Kernel and Headers for arch
 Downloads for arch based distros:
-
+https://github.com/pharra/linux-surface/releases
 
 ### What's Working
 
