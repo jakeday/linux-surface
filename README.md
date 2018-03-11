@@ -97,6 +97,9 @@ For the i915_firmware files, please select the version for your device.
 
 If you don't want to use the pre-built kernel and headers, you can compile the kernel yourself following these steps:
 
+
+0. (Prep) Install the required packages for compiling the kernel:
+  * $ sudo apt-get install build-essential binutils-dev libncurses5-dev libssl-dev ccache bison flex
 1. Assuming you cloned the linux-surface repo (this one) into ~/linux-surface, go to the parent directory:
   * $ cd ~
 2. Clone the mainline stable kernel repo:
@@ -106,7 +109,7 @@ If you don't want to use the pre-built kernel and headers, you can compile the k
 4. Checkout the version of the kernel you wish to target (replacing with your target version):
   * $ git checkout v4.y.z
 5. Apply the kernel patches from the linux-surface repo (this one):
-  * $ for i in ~/linux-surface/patches-[VERSION]/*.patch; do patch -p1 < $i; done
+  * $ for i in ~/linux-surface/patches/[VERSION]/*.patch; do patch -p1 < $i; done
 6. Copy over the config file from the linux-surface repo (this one):
   * $ cp ~/linux-surface/config .config
 7. Compile the kernel and headers (for ubuntu, refer to the build guild for your distro):
