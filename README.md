@@ -45,7 +45,7 @@ https://github.com/pharra/linux-surface/releases
 
 ### Download Pre-built Kernel and Headers
 
-Downloads for ubuntu based distros (other distros will need to compile from source in the kernel folder):
+Downloads for ubuntu based distros (other distros will need to compile from source using the included patches):
 
 https://github.com/jakeday/linux-surface/releases
 
