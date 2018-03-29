@@ -5,8 +5,8 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface4      # Build kernel with a different name
-_srcname=linux-4.15.12
-pkgver=4.15.12
+_srcname=linux-4.15.13
+pkgver=4.15.13
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -45,9 +45,9 @@ sha256sums=('6c7b26597be44de4d2949b34b87371b2dbd2825448fc60bf8fb5d084c694104b'
             '55d40252020d888b5154b9fe05a95084f045e8393b113e96253b7a198d57bb8b'
             '986598c2ec47d3cd960abd94d0f9fb6e153dc3803db6fe4fe6288afeaed962d2'
             '82d0fa48947aff93cbbc9a0f0f3020bf95e860d604549b20f7ef8e1634798bd8'
-            '031e63e059989be76db3001f3b0f60c692be8fd5c3611d1a2bc087520f48f448'
+            '1d2ee95a4f08ed0404ece84cc37b5764c3fcef000c18f828d81f3e039b1255c5'
             'SKIP'
-            '6d4c92e9c6c2f495598daf48ce881553ff751c7e64334dbeffae13f4440111a5'
+            '717527438653b501822e1c4badf0ebe7d5489daebf0d7dbcab462030216590f2'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             '75f99f5239e03238f88d1a834c50043ec32b1dc568f2cc291b07d04718483919'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65')
@@ -83,7 +83,6 @@ prepare() {
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
     sed -i "s|CONFIG_LOCALVERSION_AUTO=.*|CONFIG_LOCALVERSION_AUTO=n|" ./.config
   fi
-
   # set extraversion to pkgrel
   sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}|" Makefile
 
