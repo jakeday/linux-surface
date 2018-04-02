@@ -5,8 +5,8 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface4      # Build kernel with a different name
-_srcname=linux-4.15.12
-pkgver=4.15.12
+_srcname=linux-4.15.15
+pkgver=4.15.15
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -38,14 +38,14 @@ validpgpkeys=(
 )
 sha256sums=('6c7b26597be44de4d2949b34b87371b2dbd2825448fc60bf8fb5d084c694104b'
             'ee28626aa83b288f3e02bc4bfc49fcca969cbb258da5bdb82da1fdd66aa306bd'
-            '0bed4921cdc68844b30fb1f53013ac5f049f0a898e15b2224d2487a1f7835d7b'
+            'ecca09fe95cd3baf7e341dc5a7d6dbb56b166cd266438e4143a5618fb0b3ee28'
             '0126184f0d838695261f2e9a6aed6bd68ccea3cdb8091e8c17f7a28b688c2a82'
             'bddae8572686ffe1d3b2f09786a710fc45287952d0e14a17602f128219a0f2fc'
             '03b397cf1e02da93a19fe682e8e3240d2656ddffecaab5216780341c0d767cbb'
             '55d40252020d888b5154b9fe05a95084f045e8393b113e96253b7a198d57bb8b'
             '986598c2ec47d3cd960abd94d0f9fb6e153dc3803db6fe4fe6288afeaed962d2'
             '82d0fa48947aff93cbbc9a0f0f3020bf95e860d604549b20f7ef8e1634798bd8'
-            '031e63e059989be76db3001f3b0f60c692be8fd5c3611d1a2bc087520f48f448'
+            '0b56e8ef7e6fee6a995bfe0eeb3631c2e145cc2ca205861dd301f4c0d803dadf'
             'SKIP'
             'f148ca67d14723692519e8f71c3d03ba190b560dcd906ffd55eda0e87c11c6ae'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
