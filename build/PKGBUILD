@@ -7,7 +7,7 @@
 pkgbase=linux-surface4      # Build kernel with a different name
 _srcname=linux-4.15.15
 pkgver=4.15.15
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
@@ -36,7 +36,7 @@ validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
-sha256sums=('6c7b26597be44de4d2949b34b87371b2dbd2825448fc60bf8fb5d084c694104b'
+sha256sums=('d255c8293029809782f5a553e63c4a197badea2e0460ae28045663a6958d3fb9'
             'ee28626aa83b288f3e02bc4bfc49fcca969cbb258da5bdb82da1fdd66aa306bd'
             'ecca09fe95cd3baf7e341dc5a7d6dbb56b166cd266438e4143a5618fb0b3ee28'
             '0126184f0d838695261f2e9a6aed6bd68ccea3cdb8091e8c17f7a28b688c2a82'
