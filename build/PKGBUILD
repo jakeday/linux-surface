@@ -86,7 +86,7 @@ prepare() {
   # ... or manually edit .config
 
   # rewrite configuration
-  #yes "" | make config >/dev/null
+  yes "" | make config >/dev/null
 }
 
 build() {
