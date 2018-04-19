@@ -41,6 +41,10 @@ sha256sums=('SKIP'
 
 _kernelname=${pkgbase#linux}
 
+pkgver() {
+  cd "${_srcname}"
+  git describe --always | tr -d 'v'
+}
 
 prepare() {
   cd ${_srcname}
@@ -50,8 +54,8 @@ prepare() {
   done
   git add . && git reset --hard HEAD^1
   git checkout "linux-${_version}.y"
-  pkgver=`git describe --always | tr -d 'v'`
-  echo ${pkgver}
+  #pkgver=`git describe --always | tr -d 'v'`
+  #echo ${pkgver}
   # add upstream patch
   #patch -p1 -i ../patch-${pkgver}
 
