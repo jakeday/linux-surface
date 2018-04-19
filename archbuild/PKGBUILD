@@ -6,7 +6,7 @@
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface4      # Build kernel with a different name
 _srcname=linux-stable
-pkgver=4.14.34
+pkgver=4.15.17
 _version=4.14
 pkgrel=1
 arch=('x86_64')
