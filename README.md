@@ -37,11 +37,12 @@ Linux running on the Surface Book, Surface Book 2, Surface Pro 3, Surface Pro 4,
 Downloads for ubuntu based distros (other distros will need to compile from source using the included patches):
 https://github.com/jakeday/linux-surface/releases
 
+You will need to download both the image, headers and libc-dev files for the version you want to install.
+
 Downloads for arch based distros:
 https://github.com/pharra/linux-surface/releases
 
 
-You will need to download both the image and headers deb files for the version you want to install.
 
 ### Instructions
 
@@ -161,6 +162,10 @@ cd linux-surface/build
 makepkg -si
 ```
 
+### NOTES
+
+* If you are getting stuck at boot when loading the ramdisk, you need to install the Processor Microcode Firmware for Intel CPUs (usually found under Additional Drivers in Software and Updates).
+* If you are having issues with the position of the cursor matching the pen/stylus, you'll need to update your libwacom as mentioned here: https://github.com/jakeday/linux-surface/issues/46
 
 ### Donations Appreciated!
 
