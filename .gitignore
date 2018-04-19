@@ -3,3 +3,4 @@ pkg
 src
 *.tar.sign
 linux.install.pkg
+linux-stable

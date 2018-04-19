@@ -5,8 +5,9 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface4      # Build kernel with a different name
-_srcname=linux-4.15.16
-pkgver=4.15.16
+_srcname=linux-stable
+pkgver=4.14.34
+_version=4.14
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -14,11 +15,14 @@ license=('GPL2')
 makedepends=('xmlto' 'kmod' 'inetutils' 'bc' 'libelf')
 options=('!strip')
 source=(
-  "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-  "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
+  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  #"https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+  #"https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
   #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
   #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
-  'config'         # the main kernel config file
+  'config.4.15'         # the main kernel config file
+  'config.4.14'         # the main kernel config file
+  'config.4.16'         # the main kernel config file
   '60-linux.hook'  # pacman hook for depmod
   '90-linux.hook'  # pacman hook for initramfs regeneration
   'linux.preset'   # standard config files for mkinitcpio ramdisk
@@ -27,18 +31,27 @@ validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
-sha256sums=('e7daf2592d5eb51e5252782b1bb39e298a31517ff13759681cf882e40058c503'
-            'SKIP'
-            'ec6c5439032c027217638294474213efb6399358e2f4517f68b69eada63cf2e5'
+sha256sums=('SKIP'
+            '63c757923f7d23fb920456d05babb8a1911e203e927b3dce12424844ae8222fd'
+            '4834ac3660bf870c855a29fd156eb227cbb5d9c93ee217d4ea578184a83e65f6'
+            '63c757923f7d23fb920456d05babb8a1911e203e927b3dce12424844ae8222fd'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             '75f99f5239e03238f88d1a834c50043ec32b1dc568f2cc291b07d04718483919'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65')
 
 _kernelname=${pkgbase#linux}
 
+
 prepare() {
   cd ${_srcname}
-
+  echo "choose kernel version which you want to build:"
+  select _version in "4.14" "4.15" "4.16" ;do
+  break;
+  done
+  git add . && git reset --hard HEAD^1
+  git checkout "linux-${_version}.y"
+  pkgver=`git describe --always | tr -d 'v'`
+  echo ${pkgver}
   # add upstream patch
   #patch -p1 -i ../patch-${pkgver}
 
@@ -51,7 +64,7 @@ prepare() {
  # patch -Np1 -i ../0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 
     # surface Patches
-  for i in ${srcdir}/../../patches/4.15/*.patch;
+  for i in ${srcdir}/../../patches/${_version}/*.patch;
   do patch -p1  < $i;
   done
   #patch -Np1 -i "${srcdir}/patches/4.15//ipts.patch"
@@ -62,7 +75,7 @@ prepare() {
   #patch -Np1 -i "${srcdir}/surfaceacpi.patch"
   #patch -Np1 -i "${srcdir}/cameras.patch"
   #patch -Np1 -i "${srcdir}/acpica.patch"
-  cp -Tf ../config .config
+  cp -Tf ../config.${_version} .config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
