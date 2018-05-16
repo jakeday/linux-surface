@@ -6,7 +6,7 @@
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-surface4      # Build kernel with a different name
 _srcname=linux-stable
-pkgver=4.15.17
+pkgver=4.16.2
 _version=4.14
 pkgrel=1
 arch=('x86_64')
@@ -202,7 +202,7 @@ _package-headers() {
   install -Dt "${_builddir}/net/mac80211" -m644 net/mac80211/*.h
 
   # http://bugs.archlinux.org/task/9912
-  install -Dt "${_builddir}/drivers/media/dvb-core" -m644 drivers/media/dvb-core/*.h
+#  install -Dt "${_builddir}/drivers/media/dvb-core" -m644 drivers/media/dvb-core/*.h
 
   # http://bugs.archlinux.org/task/13146
   install -Dt "${_builddir}/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/lgdt330x.h
