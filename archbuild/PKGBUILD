@@ -52,8 +52,10 @@ prepare() {
   select _version in "4.14" "4.15" "4.16" ;do
   break;
   done
+  git pull
   git add . && git reset --hard HEAD^1
   git checkout "linux-${_version}.y"
+  #git pull
   #pkgver=`git describe --always | tr -d 'v'`
   #echo ${pkgver}
   # add upstream patch
