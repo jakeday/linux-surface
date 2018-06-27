@@ -136,7 +136,7 @@ index c96360398072..f8f63f023a95 100644
  	param(int, invert_brightness, 0) \
 -	param(int, enable_guc, 0) \
 +	param(int, enable_guc, 1) \
- 	param(int, guc_log_level, 0) \
+ 	param(int, guc_log_level, -1) \
  	param(char *, guc_firmware_path, NULL) \
  	param(char *, huc_firmware_path, NULL) \
 diff --git a/drivers/gpu/drm/i915/intel_dp.c b/drivers/gpu/drm/i915/intel_dp.c
@@ -1075,7 +1075,7 @@ diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
 index 2e1736ba2444..f3952d9d6def 100644
 --- a/drivers/hid/hid-multitouch.c
 +++ b/drivers/hid/hid-multitouch.c
-@@ -150,6 +150,7 @@ struct mt_device {
+@@ -151,6 +151,7 @@ struct mt_device {
  
  static void mt_post_parse_default_settings(struct mt_device *td);
  static void mt_post_parse(struct mt_device *td);
@@ -1083,7 +1083,7 @@ index 2e1736ba2444..f3952d9d6def 100644
  
  /* classes of device behavior */
  #define MT_CLS_DEFAULT				0x0001
-@@ -624,8 +625,12 @@ static int mt_touch_input_mapping(struct hid_device *hdev, struct hid_input *hi,
+@@ -614,8 +615,12 @@ static int mt_touch_input_mapping(struct
  			if (field->index >= field->report->maxfield ||
  			    usage->usage_index >= field->report_count)
  				return 1;
@@ -1098,7 +1098,7 @@ index 2e1736ba2444..f3952d9d6def 100644
  			return 1;
  		case HID_DG_AZIMUTH:
  			hid_map_usage(hi, usage, bit, max,
-@@ -677,6 +682,16 @@ static int mt_touch_input_mapping(struct hid_device *hdev, struct hid_input *hi,
+@@ -666,6 +671,16 @@ static int mt_touch_input_mapping(struct
  	return 0;
  }
  
@@ -1115,7 +1115,7 @@ index 2e1736ba2444..f3952d9d6def 100644
  static int mt_compute_slot(struct mt_device *td, struct input_dev *input)
  {
  	__s32 quirks = td->mtclass.quirks;
-@@ -1077,9 +1092,11 @@ static int mt_input_mapping(struct hid_device *hdev, struct hid_input *hi,
+@@ -1062,9 +1077,11 @@ static int mt_input_mapping(struct hid_d
  	    field->application != HID_DG_TOUCHSCREEN &&
  	    field->application != HID_DG_PEN &&
  	    field->application != HID_DG_TOUCHPAD &&
@@ -1127,7 +1127,7 @@ index 2e1736ba2444..f3952d9d6def 100644
  	    field->application != HID_GD_WIRELESS_RADIO_CTLS &&
  	    !(field->application == HID_VD_ASUS_CUSTOM_MEDIA_KEYS &&
  	      td->mtclass.quirks & MT_QUIRK_ASUS_CUSTOM_UP))
-@@ -1142,10 +1159,8 @@ static int mt_input_mapped(struct hid_device *hdev, struct hid_input *hi,
+@@ -1127,10 +1144,8 @@ static int mt_input_mapped(struct hid_de
  		return 0;
  
  	if (field->application == HID_DG_TOUCHSCREEN ||
@@ -1140,27 +1140,30 @@ index 2e1736ba2444..f3952d9d6def 100644
  
  	/* let hid-core decide for the others */
  	return 0;
-@@ -1288,6 +1303,7 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 		suffix = "Pen";
- 		/* force BTN_STYLUS to allow tablet matching in udev */
- 		__set_bit(BTN_STYLUS, hi->input->keybit);
-+        __set_bit(INPUT_PROP_DIRECT, hi->input->propbit);
- 	} else {
- 		switch (field->application) {
- 		case HID_GD_KEYBOARD:
-@@ -1303,9 +1319,10 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
+@@ -1315,6 +1330,7 @@ static int mt_input_configured(struct hi
  			suffix = "Pen";
  			/* force BTN_STYLUS to allow tablet matching in udev */
  			__set_bit(BTN_STYLUS, hi->input->keybit);
 +            __set_bit(INPUT_PROP_DIRECT, hi->input->propbit);
+ 		}
+ 	}
+ 
+@@ -1330,12 +1346,13 @@ static int mt_input_configured(struct hi
+ 			/* already handled by hid core */
  			break;
  		case HID_DG_TOUCHSCREEN:
 -			/* we do not set suffix = "Touchscreen" */
-+			suffix = "Touchscreen";
++ 			suffix = "Touchscreen";
+ 			hi->input->name = hdev->name;
  			break;
- 		case HID_DG_TOUCHPAD:
- 			suffix = "Touchpad";
-@@ -1436,6 +1453,7 @@ static int mt_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		case HID_DG_STYLUS:
+ 			/* force BTN_STYLUS to allow tablet matching in udev */
+ 			__set_bit(BTN_STYLUS, hi->input->keybit);
++            __set_bit(INPUT_PROP_DIRECT, hi->input->propbit);
+ 			break;
+ 		case HID_VD_ASUS_CUSTOM_MEDIA_KEYS:
+ 			suffix = "Custom Media Keys";
+@@ -1452,6 +1469,7 @@ static int mt_probe(struct hid_device *h
  	td->cc_index = -1;
  	td->scantime_index = -1;
  	td->mt_report_id = -1;
