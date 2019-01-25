@@ -1,6 +1,6 @@
-From 89c23ec802fc765915d628ac7a354d92a561dd52 Mon Sep 17 00:00:00 2001
-From: Jake Day <jake@ninebysix.com>
-Date: Tue, 22 Jan 2019 08:37:15 -0500
+From 8535b268b62543102c2ff270b78d6e0d9eb06d3f Mon Sep 17 00:00:00 2001
+From: qzed <qzed@users.noreply.github.com>
+Date: Fri, 25 Jan 2019 22:28:42 +0100
 Subject: [PATCH 03/11] buttons
 
 ---
@@ -142,7 +142,7 @@ index 23520df7650f..1ea239ff426d 100644
  };
  
 diff --git a/drivers/platform/x86/surfacepro3_button.c b/drivers/platform/x86/surfacepro3_button.c
-index 1b491690ce07..b8f9c91873c7 100644
+index 1b491690ce07..b67f559ee209 100644
 --- a/drivers/platform/x86/surfacepro3_button.c
 +++ b/drivers/platform/x86/surfacepro3_button.c
 @@ -24,6 +24,12 @@
@@ -167,9 +167,9 @@ index 1b491690ce07..b8f9c91873c7 100644
 + * ID (MSHW0040) for the power/volume buttons. Make sure this is the right
 + * device by checking for the _DSM method and OEM Platform Revision.
 + */
-+static int surface_button_check_MSHW0040(struct device *dev)
++static int surface_button_check_MSHW0040(struct acpi_device *dev)
 +{
-+	acpi_handle handle = ACPI_HANDLE(dev);
++	acpi_handle handle = dev->handle;
 +	union acpi_object *result;
 +	u64 oem_platform_rev = 0;
 +
@@ -182,7 +182,7 @@ index 1b491690ce07..b8f9c91873c7 100644
 +		ACPI_FREE(result);
 +	}
 +
-+	dev_dbg(dev, "OEM Platform Revision %llu\n", oem_platform_rev);
++	dev_dbg(&dev->dev, "OEM Platform Revision %llu\n", oem_platform_rev);
 +
 +	return oem_platform_rev == 0 ? 0 : -ENODEV;
 +}
@@ -195,7 +195,7 @@ index 1b491690ce07..b8f9c91873c7 100644
  	    strlen(SURFACE_BUTTON_OBJ_NAME)))
  		return -ENODEV;
  
-+	error = surface_button_check_MSHW0040(&device->dev);
++	error = surface_button_check_MSHW0040(device);
 +	if (error)
 +		return error;
 +
@@ -203,5 +203,5 @@ index 1b491690ce07..b8f9c91873c7 100644
  	if (!button)
  		return -ENOMEM;
 -- 
-2.17.1
+2.20.1
 
