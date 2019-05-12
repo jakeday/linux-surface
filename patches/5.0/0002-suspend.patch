@@ -120,10 +120,9 @@ index 0bd595a0b610..a8385e8894a5 100644
  	pm_notifier_call_chain(PM_POST_SUSPEND);
  	pm_restore_console();
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index f50f1471c119..eabfe9059ff6 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -314,7 +314,16 @@ static int min_extfrag_threshold;
+@@ -325,7 +325,16 @@ static int min_extfrag_threshold;
  static int max_extfrag_threshold = 1000;
  #endif
  
@@ -137,9 +136,8 @@ index f50f1471c119..eabfe9059ff6 100644
 +		.mode		= 0644,
 +		.proc_handler	= proc_dointvec,
 +	},
+ #ifndef CONFIG_SCHED_MUQSS
  	{
  		.procname	= "sched_child_runs_first",
- 		.data		= &sysctl_sched_child_runs_first,
 -- 
 2.19.1
-
