@@ -19,12 +19,12 @@ index c4a1bb41abf0..5537c35ab677 100644
 @@ -95,6 +95,11 @@ enum nvme_quirks {
  	 * Ignore device provided subnqn.
  	 */
- 	NVME_QUIRK_DISABLE_WRITE_ZEROES		= (1 << 9),
+ 	NVME_QUIRK_IGNORE_DEV_SUBNQN		= (1 << 8),
 +
 +	/*
 +	 * Do not disable nvme when suspending (s2idle)
 +	 */
-+	NVME_QUIRK_NO_DISABLE			= (1 << 10),
++	NVME_QUIRK_NO_DISABLE			= (1 << 9),
  };
  
  /*
