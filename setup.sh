@@ -52,18 +52,6 @@ else
 	echo -e "Not touching Suspend\n"
 fi
 
-echo -e "Patched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!\n"
-
-read -rp "Do you want to install the patched libwacom packages? (type yes or no) " uselibwacom;echo
-
-if [ "$uselibwacom" = "yes" ]; then
-	echo "Installing patched libwacom packages..."
-		dpkg -i packages/libwacom/*.deb
-		apt-mark hold libwacom
-else
-	echo "Not touching libwacom"
-fi
-
 echo -e "This repo comes with example xorg and pulse audio configs. If you chose to keep them, be sure to rename them and uncomment out what you'd like to keep!\n"
 
 read -rp "Do you want to remove the example intel xorg config? (type yes or no) " removexorg;echo
@@ -226,21 +214,58 @@ else
 	echo "Not setting clock"
 fi
 
-read -rp "Do you want this script to download and install the latest kernel for you? (type yes or no) " autoinstallkernel;echo
+# For debian based distributions, the kernel and libwacom can be installed automatically
+if [ -x "$(command -v dpkg)" ]
+then
 
-if [ "$autoinstallkernel" = "yes" ]; then
-	echo -e "Downloading latest kernel...\n"
+    echo -e "Patched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!\n"
+    read -rp "Do you want to install the patched libwacom packages? (type yes or no) " uselibwacom;echo
 
-	urls=$(curl --silent "https://api.github.com/repos/jakeday/linux-surface/releases/latest" | tr ',' '\n' | grep '"browser_download_url":' | sed -E 's/.*"([^"]+)".*/\1/')
+    if [ "$uselibwacom" = "yes" ]; then
+	    echo "Installing patched libwacom packages..."
+		    dpkg -i packages/libwacom/*.deb
+		    apt-mark hold libwacom
+    else
+	    echo "Not touching libwacom"
+    fi
 
-	resp=$(wget -P tmp $urls)
+    read -rp "Do you want this script to download and install the latest kernel for you? (type yes or no) " autoinstallkernel;echo
+    if [ "$autoinstallkernel" = "yes" ]; then
+	    echo -e "Downloading latest kernel...\n"
 
-	echo -e "Installing latest kernel...\n"
+	    urls=$(curl --silent "https://api.github.com/repos/jakeday/linux-surface/releases/latest" | tr ',' '\n' | grep '"browser_download_url":' | sed -E 's/.*"([^"]+)".*/\1/')
 
-	dpkg -i tmp/*.deb
-	rm -rf tmp
-else
-	echo "Not downloading latest kernel"
+	    resp=$(wget -P tmp $urls)
+
+	    echo -e "Installing latest kernel...\n"
+
+	    dpkg -i tmp/*.deb
+	    rm -rf tmp
+    else
+	    echo "Not downloading latest kernel"
+    fi
+
+    echo -e "\nAll done! Please reboot."
+    exit
+   
 fi
 
-echo -e "\nAll done! Please reboot."
+# Arch based distributions can get compiled kernels from dmhackers repository
+if [ -x "$(command -v pacman)" ]
+then
+
+    echo -e "\nPatched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!"
+    echo -e "You can install them through this AUR package: https://aur.archlinux.org/packages/libwacom-surface\n"
+    
+    echo "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
+    echo -e "For Arch-based distributions, the compiled versions can be found here: https://github.com/dmhacker/arch-linux-surface\n"
+
+    echo -e "\nAll done! After installing the custom kernel, please reboot."    
+    exit
+   
+fi
+
+# If no kernel repository is known, you have to compile it yourself
+echo -e "\nTo make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
+echo "However, there doesn't seem to be a known repository with prebuilt kernels for your distribution."
+echo "For instructions on how to compile from source, please refer to the README.md file."
