@@ -25,19 +25,18 @@ fi
 SUR_MODEL="$(dmidecode | grep "Product Name" -m 1 | xargs | sed -e 's/Product Name: //g')"
 SUR_SKU="$(dmidecode | grep "SKU Number" -m 1 | xargs | sed -e 's/SKU Number: //g')"
 
-echo -e "\nRunning $LX_BASE version $LX_VERSION on a $SUR_MODEL.\n"
-
+echo -e "\nRunning $LX_BASE version $LX_VERSION on a $SUR_MODEL."
 read -rp "Press enter if this is correct, or CTRL-C to cancel." cont;echo
 
 echo -e "\nContinuing setup...\n"
 
-echo -e "Copying the config files under root to where they belong...\n"
+echo "Copying the config files under root to where they belong..."
 for dir in $(ls root/); do cp -Rb root/$dir/* /$dir/; done
 
 echo -e "Making /lib/systemd/system-sleep/sleep executable...\n"
 chmod a+x /lib/systemd/system-sleep/sleep
 
-echo -e "Suspend is recommended over hibernate. If you chose to use hibernate, please make sure you've setup your swap file per the instructions in the README.\n"
+echo "Suspend is recommended over hibernate. If you chose to use hibernate, please make sure you've setup your swap file per the instructions in the README."
 read -rp "Do you want to replace suspend with hibernate? (type yes or no) " usehibernate;echo
 
 if [ "$usehibernate" = "yes" ]; then
@@ -52,18 +51,16 @@ else
 	echo -e "Not touching Suspend\n"
 fi
 
-echo -e "This repo comes with example xorg and pulse audio configs. If you chose to keep them, be sure to rename them and uncomment out what you'd like to keep!\n"
-
-read -rp "Do you want to remove the example intel xorg config? (type yes or no) " removexorg;echo
+echo "This repo comes with example xorg and pulse audio configs. If you chose to keep them, be sure to rename them and uncomment out what you'd like to keep!"
+read -rp "Do you want to remove the example intel xorg config? (type yes or no) " removexorg
+read -rp "Do you want to remove the example pulse audio config files? (type yes or no) " removepulse;echo
 
 if [ "$removexorg" = "yes" ]; then
-	echo "Removing the example intel xorg config..."
+	echo -e "Removing the example intel xorg config..."
 		rm /etc/X11/xorg.conf.d/20-intel_example.conf
 else
-	echo "Not touching example intel xorg config (/etc/X11/xorg.conf.d/20-intel_example.conf)"
+	echo -e "Not touching example intel xorg config (/etc/X11/xorg.conf.d/20-intel_example.conf)"
 fi
-
-read -rp "Do you want to remove the example pulse audio config files? (type yes or no) " removepulse;echo
 
 if [ "$removepulse" = "yes" ]; then
 	echo "Removing the example pulse audio config files..."
@@ -74,96 +71,96 @@ else
 fi
 
 if [ "$SUR_MODEL" = "Surface Pro 3" ]; then
-	echo -e "\nInstalling i915 firmware for Surface Pro 3...\n"
+	echo -e "\nInstalling i915 firmware for Surface Pro 3..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_bxt.zip -d /lib/firmware/i915/
 
-	echo -e "\nRemove unneeded udev rules for Surface Pro 3...\n"
+	echo -e "\nRemove unneeded udev rules for Surface Pro 3..."
 	rm /etc/udev/rules.d/98-keyboardscovers.rules
 fi
 
 if [ "$SUR_MODEL" = "Surface Pro" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Pro 2017...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Pro 2017..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v102.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Pro 2017...\n"
+	echo -e "\nInstalling i915 firmware for Surface Pro 2017..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_kbl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Pro 4" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Pro 4...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Pro 4..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v78.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Pro 4...\n"
+	echo -e "\nInstalling i915 firmware for Surface Pro 4..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_skl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Pro 2017" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Pro 2017...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Pro 2017..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v102.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Pro 2017...\n"
+	echo -e "\nInstalling i915 firmware for Surface Pro 2017..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_kbl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Pro 6" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Pro 6...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Pro 6..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v102.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Pro 6...\n"
+	echo -e "\nInstalling i915 firmware for Surface Pro 6..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_kbl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Studio" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Studio...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Studio..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v76.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Studio...\n"
+	echo -e "\nInstalling i915 firmware for Surface Studio..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_skl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Laptop" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Laptop...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Laptop..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v79.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Laptop...\n"
+	echo -e "\nInstalling i915 firmware for Surface Laptop..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_kbl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Laptop 2" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Laptop 2...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Laptop 2..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v79.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Laptop 2...\n"
+	echo -e "\nInstalling i915 firmware for Surface Laptop 2..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_kbl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Book" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Book...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Book..."
 	mkdir -p /lib/firmware/intel/ipts
 	unzip -o firmware/ipts_firmware_v76.zip -d /lib/firmware/intel/ipts/
 
-	echo -e "\nInstalling i915 firmware for Surface Book...\n"
+	echo -e "\nInstalling i915 firmware for Surface Book..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_skl.zip -d /lib/firmware/i915/
 fi
 
 if [ "$SUR_MODEL" = "Surface Book 2" ]; then
-	echo -e "\nInstalling IPTS firmware for Surface Book 2...\n"
+	echo -e "\nInstalling IPTS firmware for Surface Book 2..."
 	mkdir -p /lib/firmware/intel/ipts
 	if [ "$SUR_SKU" = "Surface_Book_1793" ]; then
 		unzip -o firmware/ipts_firmware_v101.zip -d /lib/firmware/intel/ipts/
@@ -171,11 +168,11 @@ if [ "$SUR_MODEL" = "Surface Book 2" ]; then
 		unzip -o firmware/ipts_firmware_v137.zip -d /lib/firmware/intel/ipts/
 	fi
 
-	echo -e "\nInstalling i915 firmware for Surface Book 2...\n"
+	echo -e "\nInstalling i915 firmware for Surface Book 2..."
 	mkdir -p /lib/firmware/i915
 	unzip -o firmware/i915_firmware_kbl.zip -d /lib/firmware/i915/
 
-	echo -e "\nInstalling nvidia firmware for Surface Book 2...\n"
+	echo -e "\nInstalling nvidia firmware for Surface Book 2..."
 	mkdir -p /lib/firmware/nvidia/gp108
 	unzip -o firmware/nvidia_firmware_gp108.zip -d /lib/firmware/nvidia/gp108/
 	mkdir -p /lib/firmware/nvidia/gv100
@@ -183,26 +180,27 @@ if [ "$SUR_MODEL" = "Surface Book 2" ]; then
 fi
 
 if [ "$SUR_MODEL" = "Surface Go" ]; then
-	echo -e "\nInstalling ath10k firmware for Surface Go...\n"
+	echo -e "\nInstalling ath10k firmware for Surface Go..."
 	mkdir -p /lib/firmware/ath10k
 	unzip -o firmware/ath10k_firmware.zip -d /lib/firmware/ath10k/
 
 	if [ ! -f "/etc/init.d/surfacego-touchscreen" ]; then
-		echo -e "\nPatching power control for Surface Go touchscreen...\n"
+		echo -e "\nPatching power control for Surface Go touchscreen..."
 		echo "echo \"on\" > /sys/devices/pci0000:00/0000:00:15.1/i2c_designware.1/power/control" > /etc/init.d/surfacego-touchscreen
 		chmod 755 /etc/init.d/surfacego-touchscreen
 		update-rc.d surfacego-touchscreen defaults
 	fi
 fi
 
-echo -e "Installing marvell firmware...\n"
+echo -e "\nInstalling marvell firmware..."
 mkdir -p /lib/firmware/mrvl/
 unzip -o firmware/mrvl_firmware.zip -d /lib/firmware/mrvl/
 
-echo -e "Installing mwlwifi firmware...\n"
+echo -e "\nInstalling mwlwifi firmware..."
 mkdir -p /lib/firmware/mwlwifi/
 unzip -o firmware/mwlwifi_firmware.zip -d /lib/firmware/mwlwifi/
 
+echo
 read -rp "Do you want to set your clock to local time instead of UTC? This fixes issues when dual booting with Windows. (type yes or no) " uselocaltime;echo
 
 if [ "$uselocaltime" = "yes" ]; then
@@ -211,14 +209,14 @@ if [ "$uselocaltime" = "yes" ]; then
 	timedatectl set-local-rtc 1
 	hwclock --systohc --localtime
 else
-	echo "Not setting clock"
+	echo -e "Not setting clock\n"
 fi
 
 # For debian based distributions, the kernel and libwacom can be installed automatically
 if [ -x "$(command -v dpkg)" ]
 then
 
-    echo -e "Patched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!\n"
+    echo "Patched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!"
     read -rp "Do you want to install the patched libwacom packages? (type yes or no) " uselibwacom;echo
 
     if [ "$uselibwacom" = "yes" ]; then
@@ -229,6 +227,7 @@ then
 	    echo "Not touching libwacom"
     fi
 
+    echo
     read -rp "Do you want this script to download and install the latest kernel for you? (type yes or no) " autoinstallkernel;echo
     if [ "$autoinstallkernel" = "yes" ]; then
 	    echo -e "Downloading latest kernel...\n"
@@ -237,7 +236,7 @@ then
 
 	    resp=$(wget -P tmp $urls)
 
-	    echo -e "Installing latest kernel...\n"
+	    echo -e "\nInstalling latest kernel..."
 
 	    dpkg -i tmp/*.deb
 	    rm -rf tmp
@@ -254,7 +253,7 @@ fi
 if [ -x "$(command -v pacman)" ]
 then
 
-    echo -e "\nPatched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!"
+    echo "Patched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!"
     echo -e "You can install them through this AUR package: https://aur.archlinux.org/packages/libwacom-surface\n"
     
     echo "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
@@ -266,6 +265,6 @@ then
 fi
 
 # If no kernel repository is known, you have to compile it yourself
-echo -e "\nTo make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
+echo "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
 echo "However, there doesn't seem to be a known repository with prebuilt kernels for your distribution."
 echo "For instructions on how to compile from source, please refer to the README.md file."
