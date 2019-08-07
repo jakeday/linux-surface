@@ -25,16 +25,16 @@ fi
 SUR_MODEL="$(dmidecode | grep "Product Name" -m 1 | xargs | sed -e 's/Product Name: //g')"
 SUR_SKU="$(dmidecode | grep "SKU Number" -m 1 | xargs | sed -e 's/SKU Number: //g')"
 
-echo -e "\nRunning $LX_BASE version $LX_VERSION on a $SUR_MODEL.\n"
+echo -e "\nRunning ${LX_BASE^} version $LX_VERSION on a $SUR_MODEL."
 
-read -rp "Press enter if this is correct, or CTRL-C to cancel." cont;echo
+read -rp "Press enter if this is correct, or CTRL-C to cancel. " cont;echo
 
-echo -e "\nContinuing setup...\n"
+echo -e "Continuing setup...\n"
 
-echo -e "Copying the config files under root to where they belong...\n"
+echo -e "Copying the config files under root to where they belong..."
 for dir in $(ls root/); do cp -Rb root/$dir/* /$dir/; done
 
-echo -e "Making /lib/systemd/system-sleep/sleep executable...\n"
+echo -e "\nMaking /lib/systemd/system-sleep/sleep executable...\n"
 chmod a+x /lib/systemd/system-sleep/sleep
 
 echo -e "Suspend is recommended over hibernate. If you chose to use hibernate, please make sure you've setup your swap file per the instructions in the README.\n"
@@ -52,31 +52,52 @@ else
 	echo -e "Not touching Suspend\n"
 fi
 
-if [ "$LX_BASE" = "ubuntu" ]; then
-	echo -e "Patched libwacom packages are available to better support the pen. If you intend to use the pen, it's recommended that you install them!\n"
+if [ -x "$(command -v dpkg)" ]; then
+	echo -e "Patched libwacom packages are available to better support the pen."
+	
+	echo -e "If you intend to use the pen, it's recommended that you install them!\n"
 
-	read -rp "Do you want to install the patched libwacom packages? (type yes or no) " uselibwacom;echo
+	read -rp "Do you want to install the patched libwacom packages through dpkg? (type yes or no) " uselibwacom;echo
 
 	if [ "$uselibwacom" = "yes" ]; then
 		echo -e "Installing patched libwacom packages..."
 			dpkg -i packages/libwacom/*.deb
 			apt-mark hold libwacom
 	else
-		echo -e "Not touching libwacom"
+		echo -e "Not touching libwacom\n"
 	fi
+elif [ -x "$(command -v pacman)" ]; then
+	echo -e "Patched libwacom packages are available to better support the pen."
+	    
+	echo -e "If you intend to use the pen, it's recommended that you install them!"
+	    
+	echo -e "You can install them through this AUR package: https://aur.archlinux.org/packages/libwacom-surface\n"
+elif [ -x "$(command -v yum)" ]; then
+	echo -e "Patched libwacom packages are available to better support the pen."
+	
+	echo -e "If you intend to use the pen, it's recommended that you install them!"
+	
+	echo -e "You can install them through this Fedora repository: https://github.com/StollD/fedora-linux-surface\n"
+else
+	echo -e "Patched libwacom packages are available to better support the pen."
+	
+	echo -e "If you intend to use the pen, it's recommended that you install them!"
+	
+	echo -e "You can install them through this Git repository: https://github.com/qzed/libwacom-surface\n"
 fi
 
-echo -e "This repo comes with example xorg and pulse audio configs. If you chose to keep them, be sure to rename them and uncomment out what you'd like to keep!\n"
+echo -e "This repo comes with an example xorg config. If you chose to keep it, be sure to rename it and uncomment out what you'd like to keep!\n"
 
 read -rp "Do you want to remove the example intel xorg config? (type yes or no) " removexorg;echo
 
 if [ "$removexorg" = "yes" ]; then
-	echo -e "Removing the example intel xorg config..."
+	echo -e "Removing the example intel xorg config...\n"
 		rm /etc/X11/xorg.conf.d/20-intel_example.conf
 else
-	echo -e "Not touching example intel xorg config (/etc/X11/xorg.conf.d/20-intel_example.conf)"
+	echo -e "Not touching example intel xorg config (/etc/X11/xorg.conf.d/20-intel_example.conf)\n"
 fi
 
+echo -e "This repo comes with an example pulse audio config. If you chose to keep it, be sure to rename it and uncomment out what you'd like to keep!\n"
 read -rp "Do you want to remove the example pulse audio config files? (type yes or no) " removepulse;echo
 
 if [ "$removepulse" = "yes" ]; then
@@ -216,14 +237,15 @@ if [ "$SUR_MODEL" = "Surface Go" ]; then
 	fi
 fi
 
-echo -e "Installing marvell firmware...\n"
+echo -e "\nInstalling marvell firmware...\n"
 mkdir -p /lib/firmware/mrvl/
 unzip -o firmware/mrvl_firmware.zip -d /lib/firmware/mrvl/
 
-echo -e "Installing mwlwifi firmware...\n"
+echo -e "\nInstalling mwlwifi firmware...\n"
 mkdir -p /lib/firmware/mwlwifi/
 unzip -o firmware/mwlwifi_firmware.zip -d /lib/firmware/mwlwifi/
 
+echo -e ""
 read -rp "Do you want to set your clock to local time instead of UTC? This fixes issues when dual booting with Windows. (type yes or no) " uselocaltime;echo
 
 if [ "$uselocaltime" = "yes" ]; then
@@ -232,10 +254,10 @@ if [ "$uselocaltime" = "yes" ]; then
 	timedatectl set-local-rtc 1
 	hwclock --systohc --localtime
 else
-	echo -e "Not setting clock"
+	echo -e "Not setting clock\n"
 fi
 
-if [ "$LX_BASE" = "ubuntu" ]; then
+if [ -x "$(command -v dpkg)" ]; then
 	read -rp "Do you want this script to download and install the latest kernel for you? (type yes or no) " autoinstallkernel;echo
 
 	if [ "$autoinstallkernel" = "yes" ]; then
@@ -252,6 +274,20 @@ if [ "$LX_BASE" = "ubuntu" ]; then
 	else
 		echo -e "Not downloading latest kernel"
 	fi
+elif [ -x "$(command -v pacman)" ]; then
+	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
+	
+	echo -e "For Arch-based distributions, the compiled versions can be found here: https://github.com/dmhacker/arch-linux-surface"
+elif [ -x "$(command -v yum)" ]; then
+	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
+	
+	echo -e "For Fedora, the compiled versions can be found here: https://github.com/StollD/fedora-linux-surface"
+else
+	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
+	
+	echo -e "However, there doesn't seem to be a known repository with prebuilt kernels for your distribution."
+	
+	echo -e "For instructions on how to compile from source, please refer to the README.md file."
 fi
 
 echo -e "\nAll done! Please reboot."
