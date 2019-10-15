@@ -52,40 +52,6 @@ else
 	echo -e "Not touching Suspend\n"
 fi
 
-if [ -x "$(command -v dpkg)" ]; then
-	echo -e "Patched libwacom packages are available to better support the pen."
-	
-	echo -e "If you intend to use the pen, it's recommended that you install them!\n"
-
-	read -rp "Do you want to install the patched libwacom packages through dpkg? (type yes or no) " uselibwacom;echo
-
-	if [ "$uselibwacom" = "yes" ]; then
-		echo -e "Installing patched libwacom packages..."
-			dpkg -i packages/libwacom/*.deb
-			apt-mark hold libwacom
-	else
-		echo -e "Not touching libwacom\n"
-	fi
-elif [ -x "$(command -v pacman)" ]; then
-	echo -e "Patched libwacom packages are available to better support the pen."
-	    
-	echo -e "If you intend to use the pen, it's recommended that you install them!"
-	    
-	echo -e "You can install them through this AUR package: https://aur.archlinux.org/packages/libwacom-surface\n"
-elif [ -x "$(command -v dnf)" ]; then
-	echo -e "Patched libwacom packages are available to better support the pen."
-	
-	echo -e "If you intend to use the pen, it's recommended that you install them!"
-	
-	echo -e "You can install them through this Fedora repository: https://github.com/StollD/fedora-linux-surface\n"
-else
-	echo -e "Patched libwacom packages are available to better support the pen."
-	
-	echo -e "If you intend to use the pen, it's recommended that you install them!"
-	
-	echo -e "You can install them through this Git repository: https://github.com/qzed/libwacom-surface\n"
-fi
-
 echo -e "This repo comes with an example xorg config. If you chose to keep it, be sure to rename it and uncomment out what you'd like to keep!\n"
 
 read -rp "Do you want to remove the example intel xorg config? (type yes or no) " removexorg;echo
@@ -258,6 +224,23 @@ else
 fi
 
 if [ -x "$(command -v dpkg)" ]; then
+	# libwacom
+	echo -e "Patched libwacom packages are available to better support the pen."
+	
+	echo -e "If you intend to use the pen, it's recommended that you install them!\n"
+
+	read -rp "Do you want to install the patched libwacom packages through dpkg? (type yes or no) " uselibwacom;echo
+
+	if [ "$uselibwacom" = "yes" ]; then
+		echo -e "Installing patched libwacom packages..."
+			dpkg -i packages/libwacom/*.deb
+			apt-mark hold libwacom
+	else
+		echo -e "Not touching libwacom\n"
+	fi
+	
+	# kernel
+	
 	read -rp "Do you want this script to download and install the latest kernel for you? (type yes or no) " autoinstallkernel;echo
 
 	if [ "$autoinstallkernel" = "yes" ]; then
@@ -275,14 +258,38 @@ if [ -x "$(command -v dpkg)" ]; then
 		echo -e "Not downloading latest kernel"
 	fi
 elif [ -x "$(command -v pacman)" ]; then
+	# libwacom
+	echo -e "Patched libwacom packages are available to better support the pen."
+	    
+	echo -e "If you intend to use the pen, it's recommended that you install them!"
+	    
+	echo -e "You can install them through this AUR package: https://aur.archlinux.org/packages/libwacom-surface\n"
+	
+	# kernel
 	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
 	
 	echo -e "For Arch-based distributions, the compiled versions can be found here: https://github.com/dmhacker/arch-linux-surface"
 elif [ -x "$(command -v dnf)" ]; then
+	# libwacom
+	echo -e "Patched libwacom packages are available to better support the pen."
+	
+	echo -e "If you intend to use the pen, it's recommended that you install them!"
+	
+	echo -e "You can install them through this Fedora repository: https://github.com/StollD/fedora-linux-surface\n"
+	
+	# kernel
 	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
 	
 	echo -e "For Fedora, the compiled versions can be found here: https://github.com/StollD/fedora-linux-surface"
 else
+	# libwacom
+	echo -e "Patched libwacom packages are available to better support the pen."
+	
+	echo -e "If you intend to use the pen, it's recommended that you install them!"
+	
+	echo -e "You can install them through this Git repository: https://github.com/qzed/libwacom-surface\n"
+	
+	# kernel
 	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
 	
 	echo -e "However, there doesn't seem to be a known repository with prebuilt kernels for your distribution."
