@@ -72,7 +72,7 @@ elif [ -x "$(command -v pacman)" ]; then
 	echo -e "If you intend to use the pen, it's recommended that you install them!"
 	    
 	echo -e "You can install them through this AUR package: https://aur.archlinux.org/packages/libwacom-surface\n"
-elif [ -x "$(command -v yum)" ]; then
+elif [ -x "$(command -v dnf)" ]; then
 	echo -e "Patched libwacom packages are available to better support the pen."
 	
 	echo -e "If you intend to use the pen, it's recommended that you install them!"
@@ -278,7 +278,7 @@ elif [ -x "$(command -v pacman)" ]; then
 	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
 	
 	echo -e "For Arch-based distributions, the compiled versions can be found here: https://github.com/dmhacker/arch-linux-surface"
-elif [ -x "$(command -v yum)" ]; then
+elif [ -x "$(command -v dnf)" ]; then
 	echo -e "To make features like the touchscreen or battery stats work correctly, you have to install a patched kernel!"
 	
 	echo -e "For Fedora, the compiled versions can be found here: https://github.com/StollD/fedora-linux-surface"
