@@ -10,6 +10,9 @@ if [ -r /etc/os-release ]; then
     elif [ $ID = ubuntu ]; then
         LX_BASE=$ID
         LX_VERSION=$VERSION_ID
+    elif [ $ID = linuxmint ]; then
+        LX_BASE=$NAME
+        LX_VERSION="$VERSION_ID (based on Ubuntu $UBUNTU_CODENAME)"
     elif [ ! -z "$UBUNTU_CODENAME" ] ; then
         LX_BASE="ubuntu"
         LX_VERSION=$VERSION_ID
