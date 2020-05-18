@@ -2,6 +2,10 @@
 
 Linux running on the Microsoft Surface devices . Follow the instructions below to install the latest kernel and config files.
 
+# NOTICE
+
+Just a heads up to those that are interested. I had to take a break from this project, but there are big things planned and this project will be active again very soon!!
+
 ### Supported Devices
 
 * Surface Book
