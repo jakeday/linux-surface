@@ -65,7 +65,7 @@ You will need to download the image, headers and libc-dev deb files for the vers
 
 0. (Prep) Install Dependencies:
   ```
-   sudo apt install git curl wget sed
+   sudo apt install git curl wget sed unzip
   ```
 1. Clone the linux-surface repo:
   ```
