@@ -12,6 +12,7 @@ case $1 in
     ;;
   post)
     # need to cycle the modules on a resume and after the reset is called, so unload...
+    pkill -f wpa_supplicant
     modprobe -r intel_ipts
     modprobe -r mei_me
     modprobe -r mei
