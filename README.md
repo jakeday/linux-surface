@@ -113,7 +113,7 @@ If you don't want to use the pre-built kernel and headers, you can compile the k
   ```
   for i in ~/linux-surface/patches/[VERSION]/*.patch; do patch -p1 < $i; done
   ```
-5. Use config for kernel series (may need to manually change for your distro):
+5. Use config for kernel series. You may need to manually change for your distro; for Ubuntu use `~/linux-surface/configs/[VERSION]/config.ubuntu`:
   ```
   cp ~/linux-surface/configs/[VERSION]/config .config
   ```
